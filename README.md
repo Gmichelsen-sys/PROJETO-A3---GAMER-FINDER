@@ -16,13 +16,13 @@ O Game Finder é um projeto acadêmico Java para recomendar jogos com base nas r
 - `src/ApiRawg.java`: consulta HTTP à API RAWG e parsing JSON.
 - `src/Jogo.java`: classe-modelo de jogo.
 - `src/Recomendador.java`: pontuação e ordenação de compatibilidade.
-- `lib/`: coloque a biblioteca Gson aqui.
+- `lib/`: deve conter a biblioteca Gson (`gson-2.13.2.jar`). **Sem esse arquivo dentro da pasta `lib`, não será possível compilar e executar o projeto.**
 
 ## Requisitos
 - JDK 17 ou superior.
 - VS Code com Extension Pack for Java.
 - Chave da API RAWG.
-- Gson 2.x (arquivo JAR; não incluído nesta versão do repositório).
+- Gson 2.x — arquivo `gson-2.13.2.jar`, que precisa estar dentro da pasta `lib` para compilar e executar o projeto (não incluído no repositório).
 
 ## Configuração da RAWG
 Defina sua chave de API na variável de ambiente `RAWG_API_KEY`. Não insira a chave diretamente no código e não a publique no repositório.
