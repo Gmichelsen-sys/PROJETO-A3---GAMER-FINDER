@@ -1,99 +1,50 @@
 # Game Finder — Projeto A3
 
-O **Game Finder** é um projeto acadêmico desenvolvido em Java com o objetivo de ajudar jogadores a encontrar jogos que combinem com suas preferências. O usuário responde a um questionário e o sistema utiliza essas respostas para buscar e analisar títulos, apresentando uma lista de recomendações.
+O Game Finder é um projeto acadêmico Java para recomendar jogos com base nas respostas de um questionário. O catálogo é consultado pela API RAWG; o cálculo de compatibilidade é feito pelo algoritmo Java do projeto.
 
-## Objetivo
+## Fluxo
+1. Usuário responde ao questionário.
+2. O programa seleciona o gênero para consulta.
+3. A classe ApiRawg consulta a RAWG e interpreta o JSON usando Gson.
+4. Os jogos são convertidos em objetos Jogo.
+5. Recomendador calcula compatibilidade por gênero, plataforma e nota.
+6. Os resultados são ordenados e até cinco recomendações são exibidas.
 
-Reduzir a indecisão na escolha de jogos por meio de um questionário de preferências e um algoritmo de compatibilidade desenvolvido em Java.
+## Estrutura
+- `src/Main.java`: fluxo principal e interação no terminal.
+- `src/Questionario.java`: perguntas e opções.
+- `src/ApiRawg.java`: consulta HTTP à API RAWG e parsing JSON.
+- `src/Jogo.java`: classe-modelo de jogo.
+- `src/Recomendador.java`: pontuação e ordenação de compatibilidade.
+- `lib/`: coloque a biblioteca Gson aqui.
 
-## Como funciona
+## Requisitos
+- JDK 17 ou superior.
+- VS Code com Extension Pack for Java.
+- Chave da API RAWG.
+- Gson 2.x (arquivo JAR; não incluído nesta versão do repositório).
 
-1. O programa apresenta perguntas sobre preferências e estilo de jogo.
-2. As respostas são reunidas pelo sistema.
-3. O Game Finder consulta a **RAWG API**, que funciona como seu catálogo externo de jogos.
-4. As informações recebidas são interpretadas e organizadas em objetos Java.
-5. O algoritmo próprio compara os jogos com as preferências informadas.
-6. Os resultados são pontuados, ordenados e apresentados ao usuário, destacando os mais compatíveis.
+## Configuração da RAWG
+Defina sua chave de API na variável de ambiente `RAWG_API_KEY`. Não insira a chave diretamente no código e não a publique no repositório.
 
-> **Importante:** a RAWG fornece os dados dos jogos. A lógica de compatibilidade e a decisão de recomendação são realizadas pelo Game Finder, por meio do algoritmo Java. A API não é o algoritmo de recomendação nem um banco de dados local do projeto.
-
-## Tecnologias e conceitos
-
-- Java
-- RAWG API (consulta externa de catálogo de jogos)
-- HTTP para comunicação com a API
-- JSON para formato dos dados recebidos
-- Gson para interpretação dos dados JSON (quando utilizado na versão atual)
-- Arrays e ArrayList
-- Classes e objetos
-- Laços de repetição (`for`)
-- Condicionais (`if`)
-- Métodos
-- Comparação, pontuação e ordenação
-
-## Estrutura das classes
-
-| Classe | Responsabilidade |
-|---|---|
-| `Main.java` | Ponto de entrada e coordenação do fluxo do programa |
-| `Questionario.java` | Define as perguntas e opções apresentadas ao usuário |
-| `ApiRawg.java` | Faz a consulta à RAWG API e disponibiliza os jogos recebidos |
-| `Jogo.java` | Representa os dados de cada jogo em objetos Java |
-| `Recomendador.java` | Compara jogos com as preferências, calcula compatibilidade e ordena os resultados |
-
-## Fluxo do sistema
-
-```text
-QUESTIONÁRIO
-    ↓
-RESPOSTAS DO USUÁRIO
-    ↓
-CONSULTA À RAWG API
-    ↓
-DADOS JSON → OBJETOS JOGO
-    ↓
-ALGORITMO DE COMPATIBILIDADE
-    ↓
-PONTUAÇÃO E ORDENAÇÃO
-    ↓
-JOGOS RECOMENDADOS
+### Windows PowerShell
+```powershell
+$env:RAWG_API_KEY = "SUA_CHAVE_RAWG"
+cd src
+javac -cp "..\lib\gson-2.13.2.jar" *.java
+java -cp ".;..\lib\gson-2.13.2.jar" Main
 ```
 
-## Executar o projeto
+### Linux/macOS
+```bash
+export RAWG_API_KEY="SUA_CHAVE_RAWG"
+cd src
+javac -cp ../lib/gson-2.13.2.jar *.java
+java -cp .:../lib/gson-2.13.2.jar Main
+```
 
-### Requisitos
+## Pontuação
+O percentual é uma pontuação heurística de compatibilidade (gênero: 40 pontos; plataforma: 30; avaliação RAWG: até 30), não uma probabilidade estatística de satisfação.
 
-- JDK instalado (compatível com o código do projeto)
-- Visual Studio Code
-- Extensão **Extension Pack for Java**
-- Dependências Java utilizadas pela versão atual, incluindo Gson quando necessário
-- Chave de acesso da RAWG API, caso a versão executada solicite autenticação
-
-### No VS Code
-
-1. Clone ou baixe este repositório.
-2. Abra a pasta do projeto no VS Code.
-3. Configure as dependências da versão atual.
-4. Configure sua chave da RAWG API sem publicá-la no código ou no repositório.
-5. Execute a classe `Main.java`.
-
-> As instruções exatas de compilação podem variar conforme a configuração de dependências adotada no projeto.
-
-## Sobre o algoritmo
-
-O percentual apresentado pelo Game Finder representa uma **pontuação heurística de compatibilidade**, calculada a partir dos critérios programados. Não é uma probabilidade estatística nem uma garantia de que o usuário gostará do jogo.
-
-## Escopo do MVP
-
-- Execução no terminal
-- Questionário de preferências
-- Consulta a catálogo externo por API
-- Organização dos dados em objetos Java
-- Cálculo de compatibilidade e ordenação de resultados
-
-O MVP não possui, nesta etapa, login, matchmaking ou banco de dados local próprio.
-
-## Projeto acadêmico
-
-Projeto A3 — Game Finder / Gamer Finder  
-Desenvolvido como exercício de aplicação dos conceitos de programação Java, organização em classes, estruturas de dados, integração externa e lógica algorítmica.
+## Escopo MVP
+Terminal, questionário, consulta de catálogo externo e recomendações. Não inclui login, matchmaking ou banco de dados local.
